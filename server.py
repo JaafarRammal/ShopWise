@@ -5,7 +5,8 @@ app.config["DEBUG"] = True
 
 @app.route('/hello', methods=['GET'])
 def hello_world():
-    return "<html><body>Hello World!</body></html>"
+    return 'Hey, we have Flask in a Docker container!'
+
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run()
