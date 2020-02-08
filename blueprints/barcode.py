@@ -14,16 +14,20 @@ food_db_id = "78938bf0"
 # }
 
 class Product:
-    def __init__(self, gtin, name, price, trace):
-        self.gtin = gtin
+    def __init__(self, upc, name, price, trace):
+        self.upc = upc
         self.name = name
-        self.price = price
-        self.trace = trace
 
 @barcode.route('/upc/<id>')
 def get_product(id):
 
     product = getInfo(id)
+    obj = json.load(product)
+    upc = obj['text'][5:-1]
+    print(upc)
+
+    parsed = Product(upc, "")
+
     return product
 
 def getInfo(upc):
