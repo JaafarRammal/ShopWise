@@ -10,17 +10,22 @@ import UIKit
 
 class QRScannerViewController: UIViewController {
     
-    let defaults = UserDefaults.standard
-    var attendees = [String]()
+ 
+    @IBOutlet weak var addToCartButton: UIButton!
+    @IBOutlet weak var alternativesButton: UIButton!
     
     @IBOutlet var itemview: UIView!
+    @IBOutlet weak var itemImage: UIImageView!
+    @IBOutlet weak var itemName: UILabel!
+    @IBOutlet weak var itemPrice: UILabel!
+    
     @IBOutlet weak var scannerView: QRScannerView! {
         didSet {
             scannerView.delegate = self
         }
     }
     @IBOutlet weak var scanButton: UIButton!
-    
+    @IBOutlet weak var scanButtonIcon: UIImageView!
     var qrData: QRData? = nil {
         didSet {
             if qrData != nil {
@@ -53,14 +58,34 @@ class QRScannerViewController: UIViewController {
 
     @IBAction func scanButtonAction(_ sender: UIButton) {
         scannerView.startScanning()
-
 //        HTTPsendRequest()
         
     }
     
     func displayItem(code: String){
         print(code)
+        self.scanButton.isHidden = true
+        self.scanButtonIcon.isHidden = true
         self.scannerView.addSubview(self.itemview)
+        self.addToCartButton.layer.cornerRadius = 20
+        self.alternativesButton.layer.cornerRadius = 20
+        self.itemview.center = self.view.center
+        self.itemview.layer.cornerRadius = 25
+        view.bringSubviewToFront(itemview)
+        self.itemName.text = "Item Name!"
+        self.itemPrice.text = "£" + "3"
+    }
+    
+    @IBAction func addToCart(_ sender: Any) {
+        itemview.removeFromSuperview()
+        self.scanButton.isHidden = false
+        self.scanButtonIcon.isHidden = false
+    }
+    
+    @IBAction func alternatives(_ sender: Any) {
+        itemview.removeFromSuperview()
+        self.scanButton.isHidden = false
+        self.scanButtonIcon.isHidden = false
     }
 }
 
@@ -77,9 +102,8 @@ extension QRScannerViewController: QRScannerViewDelegate {
         self.qrData = QRData(codeString: str)
         displayItem(code: qrData!.codeString!)
         scannerView.stopScanning()
+        qrData = nil
     }
-    
-    
     
 }
 
