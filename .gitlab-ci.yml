@@ -1,9 +1,13 @@
 stages:
   - deploy
 
-deploy_vm:
+staging:
   stage: deploy
   script:
-    - git push heroku Backend:master
+  - echo "Deploying"
+  - apt-get update -yq
+  - apt-get install -y ruby-dev
+  - gem install dpl-heroku
+  - dpl --provider=heroku --app=ichack20 --api-key=$HEROKU_API_KEY
   only:
-    - Backend
+  - Backend
