@@ -4,11 +4,6 @@ stages:
 deploy_vm:
   stage: deploy
   script:
-    - echo "Deploying"
-    - kill -q -9 `lsof -t -i:5000` || true
-    - export PORT=5000
-    - python3 server.py &>/dev/null &
-  tags:
-    - vm
+    - git push heroku Backend:master
   only:
     - Backend
