@@ -1,10 +1,13 @@
 from flask import Flask, jsonify
+
+from blueprints.production_trace import production_trace
 from blueprints.barcode import barcode
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
 app.register_blueprint(barcode)
+app.register_blueprint(production_trace)
 
 tasks = [
     {

@@ -1,6 +1,6 @@
 import json
 
-from flask import Blueprint, Response, request
+from flask import Blueprint, Response, request, jsonify
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 
 barcode = Blueprint('barcode', __name__)
@@ -13,15 +13,15 @@ headers = {
 }
 
 
-class Product:
-    def __init__(self, gtin, name, price, trace):
-        self.gtin = gtin
-        self.name = name
-        self.price = price
-        self.trace = trace
+# class Product:
+#     def __init__(self, gtin, name, price, trace):
+#         self.gtin = gtin
+#         self.name = name
+#         self.price = price
+#         self.trace = trace
 
 
-@barcode.route('/gtin/<id>', methods=['GET'])
+@barcode.route('/api/gtin/<id>', methods=['GET'])
 def get_product(id):
     ## MAKE API CALL TO TESCO
 
@@ -29,7 +29,7 @@ def get_product(id):
     product = tescoProduct(id)
 
     priceInfo = tescoGrocery(product)
-    return json.dump()
+    return jsonify(priceInfo)
 
 
 def tescoProduct(gtin):
