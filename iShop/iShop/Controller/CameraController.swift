@@ -13,24 +13,20 @@ class QRScannerViewController: UIViewController {
     let defaults = UserDefaults.standard
     var attendees = [String]()
     
+    @IBOutlet var itemview: UIView!
     @IBOutlet weak var scannerView: QRScannerView! {
         didSet {
             scannerView.delegate = self
         }
     }
-    @IBOutlet weak var scanButton: UIButton! {
-        didSet {
-            scanButton.setTitle("STOP", for: .normal)
-        }
-    }
+    @IBOutlet weak var scanButton: UIButton!
     
     var qrData: QRData? = nil {
         didSet {
             if qrData != nil {
-                print(qrData!)
+//                self.qrData = nil
 //                let code = String(qrData!.codeString!.split(separator: "-")[1])
-                scannerView.stopScanning()
-                }
+            }
         }
     }
     
@@ -44,7 +40,7 @@ class QRScannerViewController: UIViewController {
         super.viewWillAppear(animated)
 
         if !scannerView.isRunning {
-            scannerView.startScanning()
+            scannerView.stopScanning()
         }
     }
     
@@ -56,17 +52,21 @@ class QRScannerViewController: UIViewController {
     }
 
     @IBAction func scanButtonAction(_ sender: UIButton) {
-        scannerView.isRunning ? scannerView.stopScanning() : scannerView.startScanning()
-        let buttonTitle = scannerView.isRunning ? "STOP" : "SCAN"
-        sender.setTitle(buttonTitle, for: .normal)
+        scannerView.startScanning()
+
+//        HTTPsendRequest()
+        
+    }
+    
+    func displayItem(code: String){
+        print(code)
+        self.scannerView.addSubview(self.itemview)
     }
 }
 
-
 extension QRScannerViewController: QRScannerViewDelegate {
     func qrScanningDidStop() {
-        let buttonTitle = scannerView.isRunning ? "STOP" : "SCAN"
-        scanButton.setTitle(buttonTitle, for: .normal)
+
     }
     
     func qrScanningDidFail() {
@@ -75,6 +75,8 @@ extension QRScannerViewController: QRScannerViewDelegate {
     
     func qrScanningSucceededWithCode(_ str: String?) {
         self.qrData = QRData(codeString: str)
+        displayItem(code: qrData!.codeString!)
+        scannerView.stopScanning()
     }
     
     
@@ -91,3 +93,5 @@ func isValid(data: String, compare: [String]) -> Bool {
 func isKeyPresentInUserDefaults(key: String) -> Bool {
     return UserDefaults.standard.object(forKey: key) != nil
 }
+
+

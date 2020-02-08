@@ -18,6 +18,7 @@
 		E52C9AE723EF2478009A589F /* QRScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52C9AE623EF2478009A589F /* QRScannerView.swift */; };
 		E52C9AED23EF28B2009A589F /* View+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52C9AEC23EF28B2009A589F /* View+Alerts.swift */; };
 		E52C9AF023EF28D5009A589F /* QRData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52C9AEF23EF28D5009A589F /* QRData.swift */; };
+		E5AE6B1C23EF319D00D7827A /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE6B1B23EF319D00D7827A /* ServiceProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		E52C9AE623EF2478009A589F /* QRScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerView.swift; sourceTree = "<group>"; };
 		E52C9AEC23EF28B2009A589F /* View+Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Alerts.swift"; sourceTree = "<group>"; };
 		E52C9AEF23EF28D5009A589F /* QRData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRData.swift; sourceTree = "<group>"; };
+		E5AE6B1B23EF319D00D7827A /* ServiceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,13 +107,14 @@
 		E52C9AB123EF0A88009A589F /* iShop */ = {
 			isa = PBXGroup;
 			children = (
-				E52C9AEE23EF28CD009A589F /* Model */,
-				E52C9AEB23EF28A8009A589F /* Extensions */,
 				E52C9AB223EF0A88009A589F /* AppDelegate.swift */,
 				E52C9AB423EF0A88009A589F /* SceneDelegate.swift */,
+				E52C9AEE23EF28CD009A589F /* Model */,
+				E52C9AEB23EF28A8009A589F /* Extensions */,
 				E52C9AE923EF2798009A589F /* Controller */,
 				E52C9AE823EF2786009A589F /* View */,
 				E52C9ABB23EF0A89009A589F /* Assets.xcassets */,
+				E5AE6B1D23EF31A000D7827A /* Services */,
 				E52C9ABD23EF0A89009A589F /* LaunchScreen.storyboard */,
 				E52C9AC023EF0A89009A589F /* Info.plist */,
 			);
@@ -175,6 +178,14 @@
 				E52C9AEF23EF28D5009A589F /* QRData.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		E5AE6B1D23EF31A000D7827A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E5AE6B1B23EF319D00D7827A /* ServiceProvider.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +321,7 @@
 			files = (
 				E52C9AB323EF0A88009A589F /* AppDelegate.swift in Sources */,
 				E52C9AED23EF28B2009A589F /* View+Alerts.swift in Sources */,
+				E5AE6B1C23EF319D00D7827A /* ServiceProvider.swift in Sources */,
 				E52C9AE323EF1162009A589F /* CameraController.swift in Sources */,
 				E52C9AE723EF2478009A589F /* QRScannerView.swift in Sources */,
 				E52C9AF023EF28D5009A589F /* QRData.swift in Sources */,

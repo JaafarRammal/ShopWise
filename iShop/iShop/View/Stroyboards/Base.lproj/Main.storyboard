@@ -61,6 +61,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="itemview" destination="jEv-hj-BnZ" id="V1v-Ee-YRa"/>
                         <outlet property="scanButton" destination="pL6-of-7vO" id="qE5-dW-dXn"/>
                         <outlet property="scannerView" destination="n83-0E-aSt" id="1wo-bR-Xhe"/>
                     </connections>
