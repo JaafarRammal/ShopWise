@@ -7,7 +7,7 @@ staging:
   - echo "Deploying"
   - apt-get update -yq
   - apt-get install -y ruby-dev
-  - gem install dpl-heroku
+  - gem install dpl
   - dpl --provider=heroku --app=ichack20 --api-key=$HEROKU_API_KEY
   only:
   - Backend
