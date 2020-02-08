@@ -10,6 +10,7 @@ class trace:
     def __init__(self, id):
         self.id = id
         self.origin = 'South Africa'
+        self.carbon_footprint = 7.4
         self.trace = [
             {
                 'Origin': 'South Africa',
@@ -38,6 +39,7 @@ class trace:
         return {
             'id': self.id,
             'origin': self.origin,
+            'carbon footprint': self.carbon_footprint,
             'trace': self.trace,
         }
 
