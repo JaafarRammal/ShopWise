@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
+app.config["DEBUG"] = True
 
-db = SQLAlchemy(app)
-ma = Marshmallow(app)
+@app.route('/hello', methods=['GET'])
+def hello_world():
+    return "<html><body>Hello World!</body></html>"
+
+if __name__ == '__main__':
+    app.run(port=5000)
