@@ -1,5 +1,13 @@
 stages:
+  - start
   - deploy
+
+my_app_file_name:
+    stage: start
+    script:
+    — apt-get update -qy
+    — apt-get install -y python-dev python-pip
+    — pip install -r requirements.txt
 
 staging:
   stage: deploy
@@ -7,7 +15,7 @@ staging:
   - echo "Deploying"
   - apt-get update -yq
   - apt-get install -y ruby-dev
-  - gem install dpl
+  - gem install dpl-heroku
   - dpl --provider=heroku --app=ichack20 --api-key=$HEROKU_API_KEY
   only:
   - Backend
