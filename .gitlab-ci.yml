@@ -8,6 +8,6 @@ staging:
   - apt-get update -yq
   - apt-get install -y ruby-dev
   - gem install dpl-heroku
-  - dpl --provider=heroku --app=ichack20 --api-key=$HEROKU_API_KEY
+  - dpl --provider=heroku --app=ab5518-simplewebapp --api-key=$HEROKU_API_KEY
   only:
   - Backend
