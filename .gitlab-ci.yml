@@ -1,13 +1,5 @@
 stages:
-  - start
   - deploy
-
-my_app_file_name:
-    stage: start
-    script:
-    — apt-get update -qy
-    — apt-get install -y python-dev python-pip
-    — pip install -r requirements.txt
 
 staging:
   stage: deploy
