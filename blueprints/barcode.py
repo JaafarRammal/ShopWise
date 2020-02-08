@@ -21,7 +21,7 @@ headers = {
 #         self.trace = trace
 
 
-@barcode.route('/api/gtin/<id>', methods=['GET'])
+@barcode.route('/gtin/<id>', methods=['GET'])
 def get_product(id):
     ## MAKE API CALL TO TESCO
 
@@ -51,4 +51,6 @@ def tescoProduct(gtin):
 
 
 def tescoGrocery(product):
-    return
+    return {
+        'name': 'grape'
+    }

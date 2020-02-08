@@ -6,8 +6,8 @@ from blueprints.barcode import barcode
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-app.register_blueprint(barcode)
-app.register_blueprint(production_trace)
+app.register_blueprint(barcode, url_prefix='/api')
+app.register_blueprint(production_trace, url_prefix='/api')
 
 tasks = [
     {

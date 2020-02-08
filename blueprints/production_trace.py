@@ -44,6 +44,6 @@ class trace:
         }
 
 
-@production_trace.route('/api/trace/<id_>', methods=['GET'])
+@production_trace.route('/trace/<id_>', methods=['GET'])
 def get_product_trace(id_):
     return jsonify(trace(id_).serialize())
