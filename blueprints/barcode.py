@@ -8,6 +8,7 @@ barcode = Blueprint('barcode', __name__)
 food_db_key = "ad08b45030aa9122d39cbb6efb154f87"
 food_db_id = "78938bf0"
 
+
 # headers = {
 #     # Request headers
 #     'Ocp-Apim-Subscription-Key': '{' + food_db_key + '}',
@@ -20,11 +21,12 @@ class Product:
         self.price = price
         self.trace = trace
 
+
 @barcode.route('/upc/<id>')
 def get_product(id):
-
     product = getInfo(id)
     return product
+
 
 def getInfo(upc):
     params = urllib.parse.urlencode({
