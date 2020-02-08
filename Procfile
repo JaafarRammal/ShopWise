@@ -1,4 +1,1 @@
-# heroku.yml
-build:
-  docker:
-    web: ./Dockerfile
+web: gunicorn hello:app
