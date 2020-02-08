@@ -1,12 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask
+from blueprints.barcode import barcode
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-@app.route('/', methods=['GET'])
-def hello_world():
-    return 'Hey, we have Flask in a Docker container!'
-
+app.register_blueprint(barcode)
 
 if __name__ == '__main__':
     app.run(port=5000)
