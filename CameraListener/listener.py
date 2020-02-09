@@ -25,26 +25,18 @@ def collect_information(payload):
     # if _TRIGGERED:
     _MONITORING_MESSAGE_COUNT = _MONITORING_MESSAGE_COUNT + 1
 
-    # if payload >= MOTION_ALERT_PEOPLE_COUNT_THRESHOLD:
-    notify(SERIAL_NO)
+    if payload >= MOTION_ALERT_PEOPLE_COUNT_THRESHOLD:
+        notify(SERIAL_NO)
     # reset
     if _MONITORING_MESSAGE_COUNT > 7:
         _MONITORING_MESSAGE_COUNT = 0
         print("reset")
-        # _MONITORING_PEOPLE_TOTAL_COUNT = 0
-        # _TRIGGERED = False
-
-    # if payload > MOTION_ALERT_PEOPLE_COUNT_THRESHOLD:
-    #     print("gets here")
-    #     _TRIGGERED = True
-    #     print("payload : " + str(payload))
 
 
 def notify(serial_number):
     url = "https://api.meraki.com/api/v0/networks/{1}/cameras/{0}/snapshot".format(serial_number, NETWORK_ID)
     time_stamp = str(time.time()).split(".")[0]
     readable = datetime.datetime.fromtimestamp((int(time_stamp))).isoformat() + "Z"
-    readable = "2020-02-09T03:23:45Z"
     time.sleep(60)
 
     print(readable)
@@ -64,7 +56,6 @@ def notify(serial_number):
         file = readable + ".jpg"
         output = open(file, "wb")
         output.write(link.read())
-        # os.rename(file, "../CameraListener/snapshots/" + file)
         output.close()
 
 
