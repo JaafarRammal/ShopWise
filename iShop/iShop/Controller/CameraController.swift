@@ -145,7 +145,7 @@ class QRScannerViewController: UIViewController {
     
     @IBAction func loadTimeline(_ sender: UIButton) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let newViewController = storyBoard.instantiateViewController(withIdentifier: "AlternativesController") as! AlternativesController
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "TimelineController") as! TimelineController
         newViewController.modalPresentationStyle = .fullScreen
         
         let transition = CATransition()

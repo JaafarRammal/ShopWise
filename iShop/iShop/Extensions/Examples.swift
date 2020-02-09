@@ -35,6 +35,13 @@ public struct Recipe {
     var URLSource : Any
 }
 
+public struct Timeline {
+    var carbFootPrint : Any
+    var origin : Any
+    var transport : Any
+    var seller : Any
+}
+
 
 
 
@@ -114,3 +121,24 @@ let recipe2 : Recipe = Recipe(healthLables: [ "Sugar-Conscious", "Peanut-Free", 
 "3 ounces sopressata (salami), diced",
 "parmigiana-reggiano",
 "fresh basil leaves"], title: "Grape and Sopressata Pasta recipes", URLSource: "http://www.pbs.org/food/fresh-tastes/grape-sopressata-pasta/")
+
+
+let timelineCustard1 : Timeline = Timeline(carbFootPrint: "4.5", origin: "USA", transport: "Ship", seller: "Cindy's Sugar Factory")
+let timelineCustard2 : Timeline = Timeline(carbFootPrint: "1.7", origin: "UK", transport: "Truck", seller: "Flourman")
+let timelineCustard3 : Timeline = Timeline(carbFootPrint: "2.5", origin: "UK", transport: "Truck", seller: "Tesco Biscuit Factory")
+let timelineCustard4 : Timeline = Timeline(carbFootPrint: "2.5", origin: "UK", transport: "Truck", seller: "Tesco Supermarket")
+
+let timelineGrape1 : Timeline = Timeline(carbFootPrint: "0.1", origin: "South Africa", transport: "Truck", seller: "Bob Vineyard")
+let timelineGrape2 : Timeline = Timeline(carbFootPrint: "4.3", origin: "South Africa", transport: "Ship", seller: "Fruits worldwide")
+let timelineGrape3 : Timeline = Timeline(carbFootPrint: "2.3", origin: "UK", transport: "Truck", seller: "Tesco Warehouse")
+let timelineGrape4 : Timeline = Timeline(carbFootPrint: "1.9", origin: "UK", transport: "Truck", seller: "Tesco Supermarket")
+
+let timelinePasta1 : Timeline = Timeline(carbFootPrint: "0.1", origin: "Italy", transport: "Truck", seller: "Napolina")
+let timelinePasta2 : Timeline = Timeline(carbFootPrint: "2.3", origin: "France" , transport: "Truck", seller: "Italian Supplier")
+let timelinePasta3 : Timeline = Timeline(carbFootPrint: "4.3", origin: "UK" , transport: "Ship", seller: "Tesco Warehouse")
+let timelinePasta4 : Timeline = Timeline(carbFootPrint: "1.7", origin: "UK" , transport: "Truck", seller: "Tesco Supermarket")
+
+let timelineTwix1 : Timeline = Timeline(carbFootPrint: "0.2", origin: "Peru", transport: "Truck", seller: "Jeff's Cocoa Farm")
+let timelineTwix2 : Timeline = Timeline(carbFootPrint: "4.5", origin: "USA" , transport: "Ship", seller: "Cindy's Sugar Factory")
+let timelineTwix3 : Timeline = Timeline(carbFootPrint: "1.7", origin: "UK" , transport: "Truck", seller: "Flourman")
+let timelineTwix4 : Timeline = Timeline(carbFootPrint: "1.9", origin: "UK" , transport: "Truck", seller: "Tesco Supermarket")
