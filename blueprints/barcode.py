@@ -1,7 +1,6 @@
 import difflib
 import json
 from flask import Blueprint, Response, request
-import requests
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 
 barcode = Blueprint('barcode', __name__)
