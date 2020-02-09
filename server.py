@@ -2,12 +2,13 @@ from flask import Flask, jsonify
 
 from blueprints.production_trace import production_trace
 from blueprints.barcode import barcode
-
+from blueprints.recipes import recipes
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
 app.register_blueprint(barcode, url_prefix='/api')
 app.register_blueprint(production_trace, url_prefix='/api')
+app.register_blueprint(recipes,url_prefix='/api')
 
 tasks = [
     {
@@ -36,4 +37,4 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=5000)
