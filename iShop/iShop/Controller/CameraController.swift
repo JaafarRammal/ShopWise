@@ -12,6 +12,9 @@ import UIKit
     public var result : [String: Any] = [:]
     public var cartItems: [Item] = []
 
+    public var isRecipeResult : Bool = false
+    public var recipeResult : [String: Any] = [:]
+
     public struct Item {
        var nutrients : Any
        var name : Any
@@ -94,6 +97,22 @@ class QRScannerViewController: UIViewController {
         print("bye?")
     }
     
+    
+    
+    @IBOutlet weak var book: UIImageView!
+    @IBAction func loadFood(_ send:Any){
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "RecepiesController") as! RecepiesController
+        newViewController.modalPresentationStyle = .fullScreen
+        
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.navigationController?.pushViewController(newViewController, animated: false)
+    }
     @IBAction func loadCartView(_ sender: UIImageView) {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "CartController") as! CartController
@@ -143,6 +162,7 @@ class QRScannerViewController: UIViewController {
         itemGen = item
         self.circle.isHidden = true
         self.cart.isHidden = true
+        self.book.isHidden = true
     }
     
     @IBAction func addToCart(_ sender: Any) {
@@ -151,6 +171,7 @@ class QRScannerViewController: UIViewController {
         self.circle.isHidden = false
         self.scannerView.alpha = 1
         self.cart.isHidden = false
+        self.book.isHidden = false
     }
     
     @IBAction func alternatives(_ sender: Any) {
@@ -158,6 +179,7 @@ class QRScannerViewController: UIViewController {
         self.circle.isHidden = false
         self.scannerView.alpha = 1
         self.cart.isHidden = false
+        self.book.isHidden = false
     }
     
     func addItemToCart(item: Item){
@@ -171,6 +193,7 @@ class QRScannerViewController: UIViewController {
         self.circle.isHidden = false
         self.scannerView.alpha = 1
         self.cart.isHidden = false
+        self.book.isHidden = false
     }
     func fadeViewInThenOut(label : UILabel, delay: TimeInterval) {
 
@@ -201,29 +224,30 @@ extension QRScannerViewController: QRScannerViewDelegate {
     }
     
     func qrScanningSucceededWithCode(_ str: String?) {
-            self.qrData = QRData(codeString: str)
-            let code = qrData!.codeString!
-            if (code == "5000159417426" || code == "10066140" || code == "5000119003034") {
-                parseDataUPC(code : code)
-                print(itemGen)
-                displayItem(item : itemGen as! Item)
-                scannerView.stopScanning()
-            } else {
-            HTTPsendRequest(upcCode: qrData!.codeString!)!
+        self.qrData = QRData(codeString: str)
+        let code = qrData!.codeString!
+        if (code == "5000159417426" || code == "10066140" || code == "5000119003034" || code == "5000184592402") {
+            parseDataUPC(code : code)
+            displayItem(item: itemGen as! Item)
             scannerView.stopScanning()
-            while (!isResult) {}
-            print(result["nutrients"]!)
-                let item : Item = parseData(nutrients : result["nutrients"]!,
-                name : result["name"]!,
-                price : result["price"]!,
-                imageURL : result["imageURL"]!,
-                carbonFootPrint : "",
-                vegetarian : "",
-                vegan : "",
-                lowCalAlt : result["lowCalAlt"]!,
-                lowCarbFootPrintAlt :  result["lowCarbAlt"]!,
-                cheaperAlt : "")
-            }
+//            HTTPsendRequestRecipe(ingredients: "pasta%20grapes")
+//            while(!isRecipeResult) {}
+//            print(recipeResult)
+        } else {
+        HTTPsendRequest(upcCode: qrData!.codeString!)!
+        scannerView.stopScanning()
+        while (!isResult) {}
+        print(result["nutrients"]!)
+            let item : Item = parseData(nutrients : result["nutrients"]!,
+            name : result["name"]!,
+            price : result["price"]!,
+            imageURL : result["imageURL"]!,
+            carbonFootPrint : "",
+            vegetarian : "",
+            vegan : "",
+            lowCalAlt : result["lowCalAlt"]!,
+            lowCarbFootPrintAlt :  result["lowCarbAlt"]!,
+            cheaperAlt : "")
         }
     }
 
@@ -273,15 +297,61 @@ extension QRScannerViewController: QRScannerViewDelegate {
         return item
     }
 
+   
     func parseDataUPC(code : String) {
         if (code == "5000159417426") {
             itemGen = twix
         }
-        else if (code == "10066140") {
+        else if (code == "10066140") {
             itemGen = grape
+        }
+        else if (code == "5000184592402") {
+            itemGen = pasta
         }
         else {
             itemGen = custardCreams
         }
     }
 
+
+
+    func HTTPsendRequestRecipe(ingredients:String) -> [String: Any]? {
+        print("reached hererere")
+        guard let url = URL(string: "https://ichack20.herokuapp.com/api/recipes/" + ingredients) else {print("hi")
+            return [:]}
+        print("reached hererere2")
+
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        guard let dataResponse = data,
+                 error == nil else {
+                 print(error?.localizedDescription ?? "Response Error")
+                 return }
+           do{
+            print("reached herererdeféfaéefaée")
+
+               let jsonResponse = try JSONSerialization.jsonObject(with:
+                                      dataResponse, options: [])
+            print(jsonResponse)
+            guard let jsonArray = jsonResponse as? [String: Any] else {
+                print("empty")
+                  return
+            }
+            recipeResult = jsonArray
+            print(recipeResult)
+            isRecipeResult = true
+            self.parseRecipe(recipeResult: recipeResult)
+            print("after reach")
+
+           } catch let parsingError {
+               print("Error", parsingError)
+          }
+        }
+        task.resume()
+        return recipeResult
+        
+    }
+
+    func parseRecipe(recipeResult : [String: Any]?) -> Recipe {
+        return recipe1
+    }
+}

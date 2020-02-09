@@ -26,6 +26,18 @@ struct Alternative {
     
 }
 
+
+public struct Recipe {
+    var healthLables : Any
+    var imageURL : Any
+    var ingerdients : Any
+    var title : Any
+    var URLSource : Any
+}
+
+
+
+
 let twixAltCal : Alternative = Alternative(name : "Bear Pure Fruit Yoyo", price : "3.00", URL : UIImage.init(named: "bear")!, carbonFootPrint : "C", calories : "365.2kcal")
 
 let twixAltCarbFootPrint : Alternative = Alternative(name : "Tony's Chocolonely", price : "2.69", URL : UIImage.init(named: "tonys")!, carbonFootPrint : "B", calories : "465.2kcal")
@@ -61,3 +73,44 @@ let custardCreamsNutrients : Nutrients = Nutrients(CHOCDF: "70.1g", ENERC_KCAL: 
 
 
 let custardCreams : Item = Item(nutrients : custardCreamsNutrients, name : "Tesco Custard Creams", price : "0.44", imageURL : UIImage.init(named: "custardCreams")!, carbonFootPrint : "C", vegetarian : true, vegan : false, lowCalAlt : custardCreamsAltCal,  lowCarbFootPrintAlt : custardCreamsCarbFootPrint, cheaperAlt: custardCreamsCheap)
+
+
+let pastaAltCal : Alternative = Alternative(name : "Tesco Buckwheat Fusilli", price : "0.95", URL : "https://d1ycl3zewbvuig.cloudfront.net/images/products/11/LN_505005_BP_11.jpg", carbonFootPrint : "B", calories : "337kcal")
+
+let pastaCarbFootPrint : Alternative = Alternative(name : "Tesco Red Lentil Fusilli", price : "1.35", URL : "https://duetogsaij514.cloudfront.net/images/products/11/LN_673266_BP_11.jpg", carbonFootPrint : "A", calories : "317kcal")
+
+
+let pastaCheap : Alternative = Alternative(name : "Tesco Fusilli Pasta", price : "0.53", URL : "https://digitalcontent.api.tesco.com/v2/media/ghs/b7412201-3430-4c8b-870e-d96ba6bf9185/snapshotimagehandler_1354052235.jpeg?h=540&w=540", carbonFootPrint : "C", calories : "300kcal")
+
+
+let pastaNutrients : Nutrients = Nutrients(CHOCDF: "72.0g", ENERC_KCAL: "356kcal", FAT: "20.5g", PROCNT: "12.0g", PORTION : "100g uncooked")
+
+
+let pasta : Item = Item(nutrients : custardCreamsNutrients, name : "Napolina Fusilli", price : "1.28", imageURL : "https://digitalcontent.api.tesco.com/v2/media/ghs/09ec5b6c-f03d-443f-93b2-ee2e6a1b37e2/snapshotimagehandler_719569796.jpeg?h=540&w=540", carbonFootPrint : "C", vegetarian : true, vegan : false, lowCalAlt : pastaAltCal,  lowCarbFootPrintAlt : pastaCarbFootPrint, cheaperAlt: pastaCheap)
+
+let recipe1 : Recipe = Recipe(healthLables: ["Peanut-Free","Tree-Nut-Free","Alcohol-Free"], imageURL: "https://www.edamam.com/web-img/16c/16c924e8828ad5ce80f4f63dc0f2a6dc.jpg", ingerdients: ["6 ounces mild italian sausage, cut into 1-inch chunks",
+                                                                                                                                                                                               "1 tablespoon extra-virgin olive oil",
+                                                                                                                                                                                               "1 small red onion, halved and thinly sliced",
+                                                                                                                                                                                               "2 cloves garlic, chopped",
+                                                                                                                                                                                               "1 tablespoon plus 1/4 teaspoon salt (preferably kosher), divided",
+                                                                                                                                                                                               "2 cups seedless red grapes",
+                                                                                                                                                                                               "1 cup low-sodium chicken broth",
+                                                                                                                                                                                               "1/4 teaspoon red pepper flakes (or more to taste)",
+                                                                                                                                                                                               "10 ounces whole-wheat orecchiette (or other short-cut pasta, such as farfalle or penne)",
+                                                                                                                                                                                               "2 tablespoon grated parmesan",
+                                                                                                                                                                                               "1/4 cup chopped fresh parsley (or 1/2 cup chopped fresh basil)"], title: "Pasta with Sausage and Red Grapes", URLSource: "http://www.epicurious.com/recipes/food/views/Pasta-with-Sausage-and-Red-Grapes-366833")
+
+
+let recipe2 : Recipe = Recipe(healthLables: [ "Sugar-Conscious", "Peanut-Free", "Tree-Nut-Free", "Alcohol-Free"], imageURL: "https://www.edamam.com/web-img/458/4585bb846d4e9e599a14f8baaad88a94", ingerdients: ["1 small vine of purple grapes of choice",
+"olive oil",
+"salt",
+"pepper",
+"1 teaspoon minced fresh rosemary leaves (from 1/2 sprig of rosemary)",
+"8 ounces dried pappardelle",
+"1 shallot, peeled and minced",
+"2 garlic cloves, peeled and minced",
+"Pinch of red pepper flakes",
+"1/4 cup creme fraiche",
+"3 ounces sopressata (salami), diced",
+"parmigiana-reggiano",
+"fresh basil leaves"], title: "Grape and Sopressata Pasta recipes", URLSource: "http://www.pbs.org/food/fresh-tastes/grape-sopressata-pasta/")
