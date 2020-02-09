@@ -10,27 +10,27 @@ class trace:
     def __init__(self, id):
         self.id = id
         self.origin = 'South Africa'
-        self.carbon_footprint = 7.4
+        self.carbon_footprint = 20
         self.trace = [
             {
                 'Origin': 'South Africa',
                 'Seller': 'Jeff\'s farm',
-                'Type': 'Farmer',
-                'Carbon footprint(CO2e)': '0.4',
+                'Role': 'Farmer',
+                'Carbon footprint(CO2e)': '1',
                 'Transport': 'Truck'
             },
             {
                 'Origin': 'South Africa',
                 'Seller': 'Tesco South Africa',
-                'Type': 'Wholesaler',
-                'Carbon footprint(tCO2e)': '5',
+                'Role': 'Wholesaler',
+                'Carbon footprint(tCO2e)': '14',
                 'Transport': 'Ship'
             },
             {
                 'Origin': 'UK',
                 'Seller': 'Tesco UK',
-                'Type': 'Supermarket',
-                'Carbon footprint(tCO2e)': '2',
+                'Role': 'Supermarket',
+                'Carbon footprint(tCO2e)': '5',
                 'Transport': 'Truck'
             }
         ]
