@@ -35,7 +35,6 @@ contract SupplyChain {
     }
 
     function transfer(uint256 _id, string memory _origin, string memory _seller, string memory _role, string memory _transport, uint256 _carbon_footprint) public {
-        // products(_id) = Trace(_id, [Trace(msg.sender, _origin, _seller, _role, _transport, _carbon_foortprint)]);
         for (uint256 i = 0; i < products.length; ++i) {
             if(products[i].id == _id) {
                 products[i].steps.push(TraceEntry(msg.sender, _origin, _seller, _role, _transport, _carbon_footprint));
@@ -43,6 +42,7 @@ contract SupplyChain {
             }
         }
         Trace storage trace = products[productLength];
+        productLength++;
         trace.id = _id;
         trace.steps.push(TraceEntry(msg.sender, _origin, _seller, _role, _transport, _carbon_footprint));
     }
