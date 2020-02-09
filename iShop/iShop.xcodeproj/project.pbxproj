@@ -499,14 +499,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XZTCHPV389;
+				DEVELOPMENT_TEAM = 73BSTB3BMU;
 				INFOPLIST_FILE = iShop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pineapple.shopwise;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pineapple.shopwiseclara;
 				PRODUCT_NAME = ShopWise;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -518,14 +518,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = XZTCHPV389;
+				DEVELOPMENT_TEAM = 73BSTB3BMU;
 				INFOPLIST_FILE = iShop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.pineapple.shopwise;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pineapple.shopwiseclara;
 				PRODUCT_NAME = ShopWise;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -1,14 +1,22 @@
 import Foundation
+import UIKit
+
 let defaultSession = URLSession(configuration: .default)
 var dataTask: URLSessionDataTask?
-
-func HTTPsendRequest() {
+class Service {
     
-   let url = URL(string: "https://ichack20.herokuapp.com/tasks")!
+@IBOutlet weak var imageView: UIImageView!
+    func setImage(from url: String) {
+        guard let imageURL = URL(string: url) else { return }
 
-    let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-        guard let data = data else { return }
-        print(String(data: data, encoding: .utf8))
+            // just not to cause a deadlock in UI!
+        DispatchQueue.global().async {
+            guard let imageData = try? Data(contentsOf: imageURL) else { return }
+
+            let image = UIImage(data: imageData)
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
     }
-    task.resume()
 }
