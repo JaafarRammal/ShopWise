@@ -18,14 +18,16 @@ eanToken = 'cee7b3d1236f7076c16d0f9a02d4e5'
 # test = """[{"ean":"7622210740489","name":"Belvita Milk and Cereal Biscuits 12 Pack 540G","categoryId":"0","categoryName":"Unknown"}] """
 
 def getResultJSON(ean, name, price, imageURL, nutrients, lowCalAlt, lowFatAlt, lowCarbAlt):
-        return {"ean": ean,
-        "name": name,
-        "price": price,
-        "imageURL": imageURL,
-        "nutrients": nutrients,
-        "lowCalAlt": lowCalAlt,
-        "lowFatAlt": lowFatAlt,
-        "lowCarbAlt": lowCarbAlt}
+        return {
+            "ean": ean,
+            "name": name,
+            "price": price,
+            "imageURL": imageURL,
+            "nutrients": nutrients,
+            "lowCalAlt": lowCalAlt,
+            "lowFatAlt": lowFatAlt,
+            "lowCarbAlt": lowCarbAlt
+        }
 
 @barcode.route('/ean/<ean>')
 def get_product(ean):
@@ -42,9 +44,9 @@ def get_product(ean):
 
 
 def getAlts(allAlts):
-    (lowestCal, labelCal) = (getCals(allAlts[0]), allAlts[0])
-    (lowestFat, labelFat) = (getFat(allAlts[0]), allAlts[0])
-    (lowestCarbs, labelCarbs) = (getCarbs(allAlts[0]), allAlts[0])
+    (lowestCal, labelCal) = (getCals(allAlts[0]), getLabel(allAlts[0]))
+    (lowestFat, labelFat) = (getFat(allAlts[0]), getLabel(allAlts[0]))
+    (lowestCarbs, labelCarbs) = (getCarbs(allAlts[0]), getLabel(allAlts[0]))
     for alt in allAlts[1:]:
         if getCals(alt) != -1 and getCals(alt) < lowestCal:
             lowestCal = getCals(alt)
