@@ -3,17 +3,13 @@ import json
 import requests
 import time
 import datetime
-import os
-
 import paho.mqtt.client as mqtt
 
 MQTT_PORT = 1883
 MQTT_TOPIC = "/merakimv/Q2FV-K7QZ-K7B5/raw_detections"
 MERAKI_API_KEY = "96850833f85705851d736e34914eea6db9360280"
-ROOM_ID = ""
 
 MOTION_ALERT_PEOPLE_COUNT_THRESHOLD = 1
-_TRIGGERED = False
 _MONITORING_MESSAGE_COUNT = 0
 _MONITORING_PEOPLE_TOTAL_COUNT = 0
 SERIAL_NO = "Q2FV-K7QZ-K7B5"
@@ -35,28 +31,32 @@ def collect_information(payload):
 
 def notify(serial_number):
     url = "https://api.meraki.com/api/v0/networks/{1}/cameras/{0}/snapshot".format(serial_number, NETWORK_ID)
-    time_stamp = str(time.time()).split(".")[0]
-    readable = datetime.datetime.fromtimestamp((int(time_stamp))).isoformat() + "Z"
-    time.sleep(60)
 
-    print(readable)
-    payload = "{\n\t\"timestamp\": \"" + readable + "\"\n}"
-    headers = {
-        'X-Cisco-Meraki-API-Key': MERAKI_API_KEY,
-        'Content-Type': 'application/json'
-    }
-    response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text.encode('utf8'))
+    array = []
+    for x in range(3):
+        time_stamp = str(time.time()).split(".")[0]
+        readable = datetime.datetime.fromtimestamp((int(time_stamp))).isoformat() + "Z"
+        array.append(readable)
+        time.sleep(20)
 
-    if response.status_code//100 == 2:
-        print("Success")
-        print(response.text.encode('utf8'))
+    for x in array:
+        print(x)
+        payload = "{\n\t\"timestamp\": \"" + x + "\"\n}"
+        headers = {
+            'X-Cisco-Meraki-API-Key': MERAKI_API_KEY,
+            'Content-Type': 'application/json'
+        }
+        time.sleep(8)
+        response = requests.request("POST", url, headers=headers, data=payload)
 
-        link = response.url
-        file = readable + ".jpg"
-        output = open(file, "wb")
-        output.write(link.read())
-        output.close()
+        if response.status_code // 100 == 2:
+            print("Success")
+            print(response.text.encode('utf8'))
+
+            link = response.url
+            r = requests.get(link, allow_redirects=True)
+            file = x + ".jpeg"
+            open(file, 'wb').write(r.content)
 
 
 def on_connect(client1, userdata, flags, rc):
