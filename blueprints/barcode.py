@@ -1,7 +1,7 @@
 import difflib
 import json
-from flask import Blueprint, Response, request
-import http.client, urllib.request, urllib.parse, urllib.error, base64
+from flask import Blueprint
+import http.client, urllib.request, urllib.parse, urllib.error
 
 barcode = Blueprint('barcode', __name__)
 
@@ -34,7 +34,6 @@ def get_product(ean):
     name = product[0].get("name")
     price, imageURL = getPrice(name.lower())
     foodData = getFoodInfo(name.lower())
-    # getNutrients(foodData, name)
     nutrients, allAlts = getNutrients(foodData, name)
     lowCalAlt, lowFatAlt, lowCarbAlt = getAlts(allAlts)
 
@@ -47,13 +46,13 @@ def getAlts(allAlts):
     (lowestFat, labelFat) = (getFat(allAlts[0]), allAlts[0])
     (lowestCarbs, labelCarbs) = (getCarbs(allAlts[0]), allAlts[0])
     for alt in allAlts[1:]:
-        if getCals(alt) < lowestCal:
+        if getCals(alt) != -1 and getCals(alt) < lowestCal:
             lowestCal = getCals(alt)
             labelCal = getLabel(alt)
-        if getFat(alt) < lowestFat:
+        if getFat(alt) != -1 and getFat(alt) < lowestFat:
             lowestFat = getFat(alt)
             labelFat= getLabel(alt)
-        if getCarbs(alt) < lowestCarbs:
+        if getCarbs(alt) != -1 and getCarbs(alt) < lowestCarbs:
             lowestCarbs = getCarbs(alt)
             labelCarbs = getLabel(alt)
 
@@ -61,19 +60,35 @@ def getAlts(allAlts):
 
 
 def getCals(food):
-    return food['food']['nutrients']['ENERC_KCAL']
+    try:
+        res = food['food']['nutrients']['ENERC_KCAL']
+        return res
+    except KeyError as e:
+        return -1
+
 
 def getFat(food):
-    return food['food']['nutrients']['FAT']
+    try:
+        res = food['food']['nutrients']['FAT']
+        return res
+    except KeyError as e:
+        return -1
 
 def getCarbs(food):
-    return food['food']['nutrients']['CHOCDF']
+    try:
+        res = food['food']['nutrients']['CHOCDF']
+        return res
+    except KeyError as e:
+        return -1
 
 def getNutrients(foodData, name):
+    print(foodData)
     possibleMatches = foodData.get('hints')
-    bestMatchLabel = difflib.get_close_matches(name.lower(), map(getLabel, possibleMatches), n=1, cutoff=0.5)[0]
+    print(possibleMatches)
+    bestMatchLabel = difflib.get_close_matches(name.lower(), map(getLabel, possibleMatches), n=1, cutoff=0.2)[0]
+    print(bestMatchLabel)
     for m in possibleMatches:
-        if getLabel(m).lower() == bestMatchLabel:
+        if getLabel(m) == bestMatchLabel:
             bestMatch = m
             possibleMatches.remove(m)
             return bestMatch['food']['nutrients'], possibleMatches
@@ -99,17 +114,24 @@ def getPrice(name):
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     }
-    nameTrim = name.replace(" ", "%20")
+    params = {'s': name}
+    nameTrim = urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
 
     try:
         conn = http.client.HTTPSConnection('api.upcitemdb.com')
-        conn.request("GET", "/prod/trial/search?s=" + nameTrim, headers=headers)
+        conn.request("GET", "/prod/trial/search?s=" + nameTrim + "&match_mode=0&type=product", headers=headers)
         response = conn.getresponse()
         data = response.read()
+        print(data)
+        # data = '{"code":"OK","total":13226,"offset":5,"items":[{"ean":"0721864863944","title":"Twix Biscuit Fingers (9x23g)","description":"","upc":"721864863944","asin":"B00MTV2NLC","brand":"Twix","model":"","color":"","size":"","dimension":"2 X 7.9 X 7.9 inches","weight":"","lowest_recorded_price":3.59,"highest_recorded_price":6.49,"images":[],"offers":[],"elid":"271897304152"},{"ean":"0721865327520","title":"Twix Biscuit Fingers 16x23g - Pack Of 2","description":"","upc":"721865327520","asin":"B00XJN8Q0Q","brand":"Twix","model":"","color":"","size":"","dimension":"2 X 7.9 X 7.9 inches","weight":"","lowest_recorded_price":19.99,"highest_recorded_price":24.85,"images":[],"offers":[],"elid":"143326382139"},{"ean":"0721865350559","title":"Twix Biscuit Fingers (7x58g) - Pack Of 6","description":"","upc":"721865350559","asin":"B00XP89Z0U","brand":"Twix","model":"","color":"","size":"","dimension":"2 X 7.9 X 7.9 inches","weight":"","lowest_recorded_price":39.49,"highest_recorded_price":63.49,"images":[],"offers":[],"elid":"283039711311"},{"ean":"0721865352010","title":"Twix Biscuit Fingers (16x23g) - Pack Of 6","description":"","upc":"721865352010","asin":"B00XP86TD6","brand":"Twix","model":"","color":"","size":"","dimension":"2 X 7.9 X 7.9 inches","weight":"","lowest_recorded_price":40.99,"highest_recorded_price":40.99,"images":[],"offers":[],"elid":"273341004521"},{"ean":"0721865354892","title":"Twix Biscuit Fingers 9x23g - Pack Of 6","description":"","upc":"721865354892","asin":"B00XP7YPEM","brand":"Twix","model":"","color":"","size":"","dimension":"2 X 7.9 X 7.9 inches","weight":"","lowest_recorded_price":25.49,"highest_recorded_price":43.23,"images":[],"offers":[],"elid":"143326384620"}]}'
         conn.close()
         res = json.loads(data)['items'][0]
-        price = res['offers'][0]['price']
-        imageURL = res['images'][0]
+        price = (res['lowest_recorded_price'] + res['highest_recorded_price']) / 2
+        print(price)
+        imageURL = res['images']
+        if imageURL != []:
+            imageURL = imageURL[0]
+        print("here")
         return price, imageURL
     except Exception as e:
         print("Price data not found for product: " + name)
