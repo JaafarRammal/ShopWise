@@ -9,18 +9,6 @@
 import UIKit
 
 class CartController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    let userDefaults = UserDefaults.standard
-    
-    struct Product {
-        var nutrients : Any
-        var lowCarbAlt : Any
-        var name : Any
-        var price : Any
-        var lowFatAlt : Any
-        var lowCalAlt : Any
-        var imageURL : Any
-    }
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -31,7 +19,7 @@ class CartController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     @IBAction func checkout(_ sender: UIButton) {
-        userDefaults.set([], forKey: "Cart")
+        cartItems = []
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "CameraController") as! QRScannerViewController
         newViewController.modalPresentationStyle = .fullScreen
@@ -46,7 +34,7 @@ class CartController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     let cellId = "cellId"
-    var products : [Product] = [Product]()
+    var products : [Item] = [Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,20 +42,8 @@ class CartController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.register(ProductCell.self, forCellReuseIdentifier: cellId)
         tableView.self.delegate = self
         tableView.self.dataSource = self
-        
-//        userDefaults.set(["Test", "Hi", "Bye"], forKey: "Cart")
 
-        var titles : [String] = userDefaults.array(forKey: "Cart") as! [String]
-        for title in titles{
-            let item = Product(
-                nutrients : "",
-               lowCarbAlt : "",
-               name : title,
-               price : "",
-               lowFatAlt : "",
-               lowCalAlt : "",
-               imageURL : ""
-           )
+        for item in cartItems{
             products.append(item)
         }
     }

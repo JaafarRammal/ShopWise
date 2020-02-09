@@ -22,6 +22,7 @@
 		E58BA90F23EF9949005660D1 /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58BA90E23EF9949005660D1 /* ProductCell.swift */; };
 		E58BA91123EFA031005660D1 /* AlternativesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58BA91023EFA031005660D1 /* AlternativesController.swift */; };
 		E5AE6B1C23EF319D00D7827A /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE6B1B23EF319D00D7827A /* ServiceProvider.swift */; };
+		E5CCBEC523EFE917006B9965 /* Examples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCBEC423EFE917006B9965 /* Examples.swift */; };
 		E5EE487223EF781100F81CAC /* CartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE487123EF781100F81CAC /* CartController.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		E58BA90E23EF9949005660D1 /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		E58BA91023EFA031005660D1 /* AlternativesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativesController.swift; sourceTree = "<group>"; };
 		E5AE6B1B23EF319D00D7827A /* ServiceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
+		E5CCBEC423EFE917006B9965 /* Examples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Examples.swift; sourceTree = "<group>"; };
 		E5EE487123EF781100F81CAC /* CartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -179,6 +181,7 @@
 		E52C9AEB23EF28A8009A589F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E5CCBEC423EFE917006B9965 /* Examples.swift */,
 				E52C9AEC23EF28B2009A589F /* View+Alerts.swift */,
 			);
 			path = Extensions;
@@ -335,6 +338,7 @@
 				E52C9AB323EF0A88009A589F /* AppDelegate.swift in Sources */,
 				E52C9AED23EF28B2009A589F /* View+Alerts.swift in Sources */,
 				E58BA91123EFA031005660D1 /* AlternativesController.swift in Sources */,
+				E5CCBEC523EFE917006B9965 /* Examples.swift in Sources */,
 				E5AE6B1C23EF319D00D7827A /* ServiceProvider.swift in Sources */,
 				E52C9AE323EF1162009A589F /* CameraController.swift in Sources */,
 				E52C9AE723EF2478009A589F /* QRScannerView.swift in Sources */,

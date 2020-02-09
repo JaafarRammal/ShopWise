@@ -7,18 +7,12 @@
 //
 
 import UIKit
+
 class ProductCell : UITableViewCell {
  
-    struct Product {
-        var productName : String
-        var productImage : UIImage
-        var productDesc : String
-    }
-    
-    var product : Product? {
+    var product : Item? {
         didSet {
-            productImage.image = product?.productImage
-            productNameLabel.text = product?.productName
+            productNameLabel.text = (product?.name as! String)
             productDescriptionLabel.text = product?.productDesc
         }
     }
@@ -32,27 +26,27 @@ class ProductCell : UITableViewCell {
         return lbl
     }()
 
-
-    private let productDescriptionLabel : UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .black
-        lbl.font = UIFont.systemFont(ofSize: 30)
-        lbl.textAlignment = .left
-        lbl.numberOfLines = 0
-        return lbl
-    }()
+//
+//    private let productDescriptionLabel : UILabel = {
+//        let lbl = UILabel()
+//        lbl.textColor = .black
+//        lbl.font = UIFont.systemFont(ofSize: 30)
+//        lbl.textAlignment = .left
+//        lbl.numberOfLines = 0
+//        return lbl
+//    }()
 
     var productPrice : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 30)
         label.textAlignment = .left
-            label.text = "1"
+        label.text = "1"
         label.textColor = .black
         return label
     }()
 
     private let productImage : UIImageView = {
-        let imgView = UIImageView(image: #imageLiteral(resourceName: "green"))
+        let imgView = UIImageView(self.someImage)
         imgView.contentMode = .scaleAspectFit
         imgView.clipsToBounds = true
         return imgView
@@ -62,7 +56,7 @@ class ProductCell : UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(productNameLabel)
-        addSubview(productDescriptionLabel)
+//        addSubview(productDescriptionLabel)
         addSubview(productPrice)
         addSubview(productImage)
 
