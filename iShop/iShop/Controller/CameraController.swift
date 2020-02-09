@@ -33,6 +33,13 @@ public struct Recipe {
     var URLSource : Any
 }
 
+public struct Timeline {
+    var carbFootPrint : Any
+    var origin : Any
+    var transport : Any
+    var seller : Any
+}
+
 class QRScannerViewController: UIViewController {
     
     let defaults = UserDefaults.standard
@@ -104,9 +111,16 @@ extension QRScannerViewController: QRScannerViewDelegate {
             print(item)
             scannerView.stopScanning()
             print(item)
+            
+            HTTPsendRequestTimeline(code: code)
+            while(!isTimeline) {}
+            
+            HTTPsendRequest(upcCode: code)
+            while(!isResult) {}
+            
             HTTPsendRequestRecipe(ingredients: "pasta%20grapes")
             while(!isRecipeResult) {}
-            print(recipeResult)
+            
         } else {
         HTTPsendRequest(upcCode: qrData!.codeString!)!
         scannerView.stopScanning()
@@ -228,4 +242,44 @@ func HTTPsendRequestRecipe(ingredients:String) -> [String: Any]? {
 
 func parseRecipe(recipeResult : [String: Any]?) -> Recipe {
     return recipe1
+}
+
+
+public var isTimeline : Bool = false
+public var resultTimeline : [String: Any] = [:]
+
+func HTTPsendRequestTimeline(code:String) -> [String: Any]? {
+    print("reached hererere")
+    guard let url = URL(string: "https://ichack20.herokuapp.com/api/trace/" + code) else {
+        return [:]}
+
+    let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+    guard let dataResponse = data,
+             error == nil else {
+             print(error?.localizedDescription ?? "Response Error")
+             return }
+       do{
+           let jsonResponse = try JSONSerialization.jsonObject(with:
+                                  dataResponse, options: [])
+        print(jsonResponse)
+        guard let jsonArray = jsonResponse as? [String: Any] else {
+              return
+        }
+        resultTimeline = jsonArray
+        isTimeline = true
+        parseTimeline(timeline: resultTimeline)
+        print("after reach")
+
+       } catch let parsingError {
+           print("Error", parsingError)
+      }
+    }
+    task.resume()
+    return resultTimeline
+    
+}
+
+func parseTimeline(timeline : [String: Any]?) -> Timeline {
+    let newTimeline = Timeline(carbFootPrint: timeline!["Carbon footprint(tCO2e)"], origin: timeline!["Origin"], transport: timeline!["Transport"], seller: timeline!["seller"])
+    return newTimeline
 }
