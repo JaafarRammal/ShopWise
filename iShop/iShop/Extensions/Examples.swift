@@ -90,3 +90,18 @@ let recipe1 : Recipe = Recipe(healthLables: ["Peanut-Free","Tree-Nut-Free","Alco
                                                                                                                                                                                                "1/4 cup chopped fresh parsley (or 1/2 cup chopped fresh basil)"], title: "Pasta with Sausage and Red Grapes", URLSource: "http://www.epicurious.com/recipes/food/views/Pasta-with-Sausage-and-Red-Grapes-366833")
 
 
+let recipe2 : Recipe = Recipe(healthLables: [ "Sugar-Conscious", "Peanut-Free", "Tree-Nut-Free", "Alcohol-Free"], imageURL: "https://www.edamam.com/web-img/458/4585bb846d4e9e599a14f8baaad88a94", ingerdients: ["1 small vine of purple grapes of choice",
+"olive oil",
+"salt",
+"pepper",
+"1 teaspoon minced fresh rosemary leaves (from 1/2 sprig of rosemary)",
+"8 ounces dried pappardelle",
+"1 shallot, peeled and minced",
+"2 garlic cloves, peeled and minced",
+"Pinch of red pepper flakes",
+"1/4 cup creme fraiche",
+"3 ounces sopressata (salami), diced",
+"parmigiana-reggiano",
+"fresh basil leaves"], title: "Grape and Sopressata Pasta recipes", URLSource: "http://www.pbs.org/food/fresh-tastes/grape-sopressata-pasta/")
+
+
