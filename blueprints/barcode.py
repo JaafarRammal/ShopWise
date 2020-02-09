@@ -10,6 +10,18 @@ food_db_id = "78938bf0"
 
 eanToken = 'cee7b3d1236f7076c16d0f9a02d4e5'
 
+def getResultJSON(ean, name, price, imageURL, nutrients, lowCalAlt, lowFatAlt, lowCarbAlt):
+        return {
+            "ean": ean,
+            "name": name,
+            "price": price,
+            "imageURL": imageURL,
+            "nutrients": nutrients,
+            "lowCalAlt": lowCalAlt,
+            "lowFatAlt": lowFatAlt,
+            "lowCarbAlt": lowCarbAlt
+        }
+
 @barcode.route('/ean/<ean>', methods=['GET'])
 def get_product(ean):
     product = json.loads(getInfo(ean))
@@ -33,9 +45,9 @@ def getResultJSON(ean, name, price, imageURL, nutrients, lowCalAlt, lowFatAlt, l
         "lowCarbAlt": lowCarbAlt}
 
 def getAlts(allAlts):
-    (lowestCal, labelCal) = (getCals(allAlts[0]), allAlts[0])
-    (lowestFat, labelFat) = (getFat(allAlts[0]), allAlts[0])
-    (lowestCarbs, labelCarbs) = (getCarbs(allAlts[0]), allAlts[0])
+    (lowestCal, labelCal) = (getCals(allAlts[0]), getLabel(allAlts[0]))
+    (lowestFat, labelFat) = (getFat(allAlts[0]), getLabel(allAlts[0]))
+    (lowestCarbs, labelCarbs) = (getCarbs(allAlts[0]), getLabel(allAlts[0]))
     for alt in allAlts[1:]:
         if getCals(alt) != -1 and getCals(alt) < lowestCal:
             lowestCal = getCals(alt)
