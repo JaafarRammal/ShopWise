@@ -25,6 +25,14 @@ public struct Item {
     var cheaperAlt : Any
 }
 
+public struct Recipe {
+    var healthLables : Any
+    var imageURL : Any
+    var ingerdients : Any
+    var title : Any
+    var URLSource : Any
+}
+
 class QRScannerViewController: UIViewController {
     
     let defaults = UserDefaults.standard
@@ -91,10 +99,14 @@ extension QRScannerViewController: QRScannerViewDelegate {
         self.qrData = QRData(codeString: str)
         displayItem(code: qrData!.codeString!)
         let code = qrData!.codeString!
-        if (code == "5000159417426" || code == "10066140" || code == "5000119003034") {
+        if (code == "5000159417426" || code == "10066140" || code == "5000119003034" || code == "5000184592402") {
             parseDataUPC(code : code)
             print(item)
             scannerView.stopScanning()
+            print(item)
+            HTTPsendRequestRecipe(ingredients: "pasta%20grapes")
+            while(!isRecipeResult) {}
+            print(recipeResult)
         } else {
         HTTPsendRequest(upcCode: qrData!.codeString!)!
         scannerView.stopScanning()
@@ -167,7 +179,53 @@ func parseDataUPC(code : String) {
     else if (code == "10066140") {
         item = grape
     }
+    else if (code == "5000184592402") {
+        item = pasta
+    }
     else {
         item = custardCreams
     }
+}
+
+public var isRecipeResult : Bool = false
+public var recipeResult : [String: Any] = [:]
+
+func HTTPsendRequestRecipe(ingredients:String) -> [String: Any]? {
+    print("reached hererere")
+    guard let url = URL(string: "https://ichack20.herokuapp.com/api/recipes/" + ingredients) else {print("hi")
+        return [:]}
+    print("reached hererere2")
+
+    let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+    guard let dataResponse = data,
+             error == nil else {
+             print(error?.localizedDescription ?? "Response Error")
+             return }
+       do{
+        print("reached herererdeféfaéefaée")
+
+           let jsonResponse = try JSONSerialization.jsonObject(with:
+                                  dataResponse, options: [])
+        print(jsonResponse)
+        guard let jsonArray = jsonResponse as? [String: Any] else {
+            print("empty")
+              return
+        }
+        recipeResult = jsonArray
+        print(recipeResult)
+        isRecipeResult = true
+        parseRecipe(recipeResult: recipeResult)
+        print("after reach")
+
+       } catch let parsingError {
+           print("Error", parsingError)
+      }
+    }
+    task.resume()
+    return recipeResult
+    
+}
+
+func parseRecipe(recipeResult : [String: Any]?) -> Recipe {
+    return recipe1
 }
