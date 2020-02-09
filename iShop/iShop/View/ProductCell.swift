@@ -10,64 +10,32 @@ import UIKit
 
 class ProductCell : UITableViewCell {
  
-    var product : Item? {
-        didSet {
-            productNameLabel.text = (product?.name as! String)
-            productDescriptionLabel.text = product?.productDesc
-        }
-    }
+    var itemIndex: Int?
+   
+    @objc func tapDetected() {
+        cartItems.remove(at: itemIndex!)
+        print("Removed at \(itemIndex!)")
 
-
-    private let productNameLabel : UILabel = {
-        let lbl = UILabel()
-        lbl.textColor = .black
-        lbl.font = UIFont.boldSystemFont(ofSize: 30)
-        lbl.textAlignment = .right
-        return lbl
-    }()
-
-//
-//    private let productDescriptionLabel : UILabel = {
-//        let lbl = UILabel()
-//        lbl.textColor = .black
-//        lbl.font = UIFont.systemFont(ofSize: 30)
-//        lbl.textAlignment = .left
-//        lbl.numberOfLines = 0
-//        return lbl
-//    }()
-
-    var productPrice : UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 30)
-        label.textAlignment = .left
-        label.text = "1"
-        label.textColor = .black
-        return label
-    }()
-
-    private let productImage : UIImageView = {
-        let imgView = UIImageView(self.someImage)
-        imgView.contentMode = .scaleAspectFit
-        imgView.clipsToBounds = true
-        return imgView
-    }()
-
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubview(productNameLabel)
-//        addSubview(productDescriptionLabel)
-        addSubview(productPrice)
-        addSubview(productImage)
-
-        productNameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 5, paddingBottom: 0, paddingRight: 0, width: 100, height: 0, enableInsets: false)
-        productImage.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 0, paddingBottom: 5, paddingRight: 5, width: 40, height: 0, enableInsets: false)
-        productPrice.anchor(top: productNameLabel.bottomAnchor, left: productImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: frame.size.width / 2, height: 0, enableInsets: false)
-
-        self.selectionStyle = .none
     }
     
-   required init?(coder aDecoder: NSCoder) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
+        let delete = UIImageView()
+        delete.image = UIImage(named: "x")
+        delete.contentMode = .scaleAspectFit
+        delete.clipsToBounds = true
+        addSubview(delete)
+        delete.anchor(top: topAnchor, left: nil, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 0, paddingBottom: 5, paddingRight: 5, width: 40, height: 0, enableInsets: false)
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(tapDetected))
+        delete.isUserInteractionEnabled = true
+        delete.addGestureRecognizer(singleTap)
+        
+    }
+    
+    
+    
+    required init?(coder aDecoder: NSCoder) {
        super.init(coder: aDecoder)
     }
 

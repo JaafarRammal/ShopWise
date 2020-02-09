@@ -46,7 +46,7 @@ let grapeCheap : Alternative = Alternative(name : "Jaffa Clementine Or Sweet Eas
 let grapeNutrients : Nutrients = Nutrients(CHOCDF: "27.3g", ENERC_KCAL: "104kcal", FAT: "0.2g", PROCNT: "0g", PORTION : "100g")
 
 
-let grape : Item = Item(nutrients : grapeNutrients, name : "Tesco Red Seedless Grapes Punnet 500G", price : "2.00", imageURL : UIImage.init(named: "grapes")!, carbonFootPrint : "B", vegetarian : true, vegan : false, lowCalAlt : grapeAltCal,  lowCarbFootPrintAlt : grapeCarbFootPrint, cheaperAlt: grapeCheap)
+let grape : Item = Item(nutrients : grapeNutrients, name : "Tesco Red Seedless Grapes", price : "2.00", imageURL : UIImage.init(named: "grapes")!, carbonFootPrint : "B", vegetarian : true, vegan : false, lowCalAlt : grapeAltCal,  lowCarbFootPrintAlt : grapeCarbFootPrint, cheaperAlt: grapeCheap)
 
 
 let custardCreamsAltCal : Alternative = Alternative(name : "Belvita Breakfast Milk", price : "2.00", URL : UIImage.init(named: "belvita")!, carbonFootPrint : "C", calories : "402kcal")
