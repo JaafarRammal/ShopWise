@@ -24,6 +24,7 @@
 		E5AE6B1C23EF319D00D7827A /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE6B1B23EF319D00D7827A /* ServiceProvider.swift */; };
 		E5CCBEC523EFE917006B9965 /* Examples.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCBEC423EFE917006B9965 /* Examples.swift */; };
 		E5CCBEC723F012EC006B9965 /* RecepiesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCBEC623F012EC006B9965 /* RecepiesController.swift */; };
+		E5CCBEC923F01F99006B9965 /* TimelineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCBEC823F01F99006B9965 /* TimelineController.swift */; };
 		E5EE487223EF781100F81CAC /* CartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EE487123EF781100F81CAC /* CartController.swift */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		E5AE6B1B23EF319D00D7827A /* ServiceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		E5CCBEC423EFE917006B9965 /* Examples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Examples.swift; sourceTree = "<group>"; };
 		E5CCBEC623F012EC006B9965 /* RecepiesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecepiesController.swift; sourceTree = "<group>"; };
+		E5CCBEC823F01F99006B9965 /* TimelineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineController.swift; sourceTree = "<group>"; };
 		E5EE487123EF781100F81CAC /* CartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -169,6 +171,7 @@
 				E5EE487123EF781100F81CAC /* CartController.swift */,
 				E58BA91023EFA031005660D1 /* AlternativesController.swift */,
 				E5CCBEC623F012EC006B9965 /* RecepiesController.swift */,
+				E5CCBEC823F01F99006B9965 /* TimelineController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5CCBEC923F01F99006B9965 /* TimelineController.swift in Sources */,
 				E58BA90D23EF9903005660D1 /* Extension.swift in Sources */,
 				E52C9AB323EF0A88009A589F /* AppDelegate.swift in Sources */,
 				E52C9AED23EF28B2009A589F /* View+Alerts.swift in Sources */,

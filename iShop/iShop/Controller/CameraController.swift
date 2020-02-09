@@ -143,6 +143,21 @@ class QRScannerViewController: UIViewController {
         
     }
     
+    @IBAction func loadTimeline(_ sender: UIButton) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "AlternativesController") as! AlternativesController
+        newViewController.modalPresentationStyle = .fullScreen
+        
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.navigationController?.pushViewController(newViewController, animated: false)
+        
+    }
+    
     func displayItem(item: Item){
         self.mainView.addSubview(self.itemview)
         self.scannerView.alpha = 0.5
