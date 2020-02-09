@@ -107,13 +107,19 @@ def getPrice(name):
         'Accept': 'application/json'
     }
     name.replace(" ", "%20")
-    resp = requests.get('https://api.upcitemdb.com/prod/trial/search?s='+name, headers=headers)
-    res = json.loads(resp.text)['items'][0]
-    price = res['offers'][0]['price']
-    imageURL = res['images'][0]
-    print(price)
-    print(imageURL)
-    return price, imageURL
+
+    try:
+        conn = http.client.HTTPSConnection('api.upcitemdb.com')
+        conn.request("GET", "/prod/trial/search?%s" % name, headers=headers)
+        response = conn.getresponse()
+        data = response.read()
+        conn.close()
+        res = json.loads(data)['items'][0]
+        price = res['offers'][0]['price']
+        imageURL = res['images'][0]
+        return price, imageURL
+    except Exception as e:
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
 def getFoodInfo(name):
     params = urllib.parse.urlencode({
