@@ -10,18 +10,20 @@ import UIKit
 
 public var isResult : Bool = false
 public var result : [String: Any] = [:]
+public var item : Any = []
 
-struct Item {
+public struct Item {
     var nutrients : Any
-    var lowCarbAlt : Any
     var name : Any
     var price : Any
-    var lowFatAlt : Any
-    var lowCalAlt : Any
     var imageURL : Any
+    var carbonFootPrint : Any
+    var vegetarian : Any
+    var vegan : Any
+    var lowCalAlt : Any
+    var lowCarbFootPrintAlt : Any
+    var cheaperAlt : Any
 }
-
-
 
 class QRScannerViewController: UIViewController {
     
@@ -88,16 +90,28 @@ extension QRScannerViewController: QRScannerViewDelegate {
     func qrScanningSucceededWithCode(_ str: String?) {
         self.qrData = QRData(codeString: str)
         displayItem(code: qrData!.codeString!)
+        let code = qrData!.codeString!
+        if (code == "5000159417426" || code == "10066140" || code == "5000119003034") {
+            parseDataUPC(code : code)
+            print(item)
+            scannerView.stopScanning()
+        } else {
         HTTPsendRequest(upcCode: qrData!.codeString!)!
         scannerView.stopScanning()
         while (!isResult) {}
         print(result["nutrients"]!)
-        let item : Item = parseData(nutrients: result["nutrients"]!, lowCarbAlt: result["lowCarbAlt"]!, name: result["name"]!, price: result["price"]!, lowFatAlt: result["lowFatAlt"]!, lowCalAlt: result["lowCalAlt"]!, imageURL: result["imageURL"]! )
-        print(item)
+            let item : Item = parseData(nutrients : result["nutrients"]!,
+            name : result["name"]!,
+            price : result["price"]!,
+            imageURL : result["imageURL"]!,
+            carbonFootPrint : "",
+            vegetarian : "",
+            vegan : "",
+            lowCalAlt : result["lowCalAlt"]!,
+            lowCarbFootPrintAlt :  result["lowCarbAlt"]!,
+            cheaperAlt : "")
+        }
     }
-    
-    
-    
 }
 
 func isValid(data: String, compare: [String]) -> Bool {
@@ -121,21 +135,17 @@ guard let url = URL(string: "https://ichack20.herokuapp.com/api/ean/" + upcCode)
              print(error?.localizedDescription ?? "Response Error")
              return }
        do{
-           //here dataResponse received from a network request
            let jsonResponse = try JSONSerialization.jsonObject(with:
                                   dataResponse, options: [])
-    //        print(jsonResponse) //Response result
         guard let jsonArray = jsonResponse as? [String: Any] else {
             print("empty")
               return
         }
-    //        print("here")
         result = jsonArray
         print(result)
         isResult = true
 
-    //        print(result)
-        } catch let parsingError {
+       } catch let parsingError {
            print("Error", parsingError)
       }
     }
@@ -144,7 +154,20 @@ guard let url = URL(string: "https://ichack20.herokuapp.com/api/ean/" + upcCode)
     
 }
 
-func parseData(nutrients : Any, lowCarbAlt : Any, name : Any, price : Any, lowFatAlt : Any, lowCalAlt : Any, imageURL : Any) -> Item {
-    let item = Item(nutrients : nutrients, lowCarbAlt : lowCarbAlt, name : name, price : price, lowFatAlt : lowFatAlt, lowCalAlt : lowCalAlt, imageURL : imageURL)
+func parseData(nutrients : Any, name : Any, price : Any, imageURL : Any, carbonFootPrint : Any, vegetarian : Any, vegan : Any, lowCalAlt : Any, lowCarbFootPrintAlt :  Any, cheaperAlt : Any) -> Item {
+    
+    let item = Item(nutrients : nutrients, name : name, price : price, imageURL : imageURL, carbonFootPrint : carbonFootPrint, vegetarian : vegetarian, vegan : vegan, lowCalAlt : lowCalAlt, lowCarbFootPrintAlt :  lowCarbFootPrintAlt, cheaperAlt : cheaperAlt)
     return item
+}
+
+func parseDataUPC(code : String) {
+    if (code == "5000159417426") {
+        item = twix
+    }
+    else if (code == "10066140") {
+        item = grape
+    }
+    else {
+        item = custardCreams
+    }
 }
