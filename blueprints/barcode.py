@@ -1,7 +1,6 @@
 import difflib
 import json
 from flask import Blueprint, Response, request
-import requests
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 
 barcode = Blueprint('barcode', __name__)
@@ -16,7 +15,7 @@ eanToken = 'cee7b3d1236f7076c16d0f9a02d4e5'
 #   'Accept': 'application/json'
 # }
 
-test = """[{"ean":"7622210740489","name":"Belvita Milk and Cereal Biscuits 12 Pack 540G","categoryId":"0","categoryName":"Unknown"}] """
+# test = """[{"ean":"7622210740489","name":"Belvita Milk and Cereal Biscuits 12 Pack 540G","categoryId":"0","categoryName":"Unknown"}] """
 
 def getResultJSON(ean, name, price, imageURL, nutrients, lowCalAlt, lowFatAlt, lowCarbAlt):
         return {"ean": ean,
@@ -30,10 +29,9 @@ def getResultJSON(ean, name, price, imageURL, nutrients, lowCalAlt, lowFatAlt, l
 
 @barcode.route('/ean/<ean>')
 def get_product(ean):
-    # product = getInfo(id)
-    product = json.loads(test)
+    product = json.loads(getInfo(ean))
+    # product = json.loads(test)
     name = product[0].get("name")
-    # print(obj['name'])
     price, imageURL = getPrice(name.lower())
     foodData = getFoodInfo(name.lower())
     # getNutrients(foodData, name)
@@ -74,15 +72,10 @@ def getCarbs(food):
 def getNutrients(foodData, name):
     possibleMatches = foodData.get('hints')
     bestMatchLabel = difflib.get_close_matches(name.lower(), map(getLabel, possibleMatches), n=1, cutoff=0.5)[0]
-    print(bestMatchLabel)
     for m in possibleMatches:
-        print(getLabel(m))
         if getLabel(m).lower() == bestMatchLabel:
             bestMatch = m
-            print("found")
             possibleMatches.remove(m)
-            print(bestMatchLabel)
-            print(possibleMatches)
             return bestMatch['food']['nutrients'], possibleMatches
 
 def getLabel(x):
@@ -90,27 +83,27 @@ def getLabel(x):
 
 
 def getInfo(ean):
-    params = 'token=' + eanToken + '&op=barcode-lookup&format=json&ean='+ean
+    req = 'token=' + eanToken + '&op=barcode-lookup&format=json&ean=' + ean
     try:
         conn = http.client.HTTPSConnection('api.ean-search.org')
-        conn.request("GET", "/api?%s" % params)
+        conn.request("GET", "/api?%s" % req)
         response = conn.getresponse()
         data = response.read()
         conn.close()
         return data
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print("Ean number not recognised: " + str(ean))
 
 def getPrice(name):
     headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     }
-    name.replace(" ", "%20")
+    nameTrim = name.replace(" ", "%20")
 
     try:
         conn = http.client.HTTPSConnection('api.upcitemdb.com')
-        conn.request("GET", "/prod/trial/search?%s" % name, headers=headers)
+        conn.request("GET", "/prod/trial/search?s=" + nameTrim, headers=headers)
         response = conn.getresponse()
         data = response.read()
         conn.close()
@@ -119,7 +112,7 @@ def getPrice(name):
         imageURL = res['images'][0]
         return price, imageURL
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print("Price data not found for product: " + name)
 
 def getFoodInfo(name):
     params = urllib.parse.urlencode({
@@ -136,4 +129,4 @@ def getFoodInfo(name):
         conn.close()
         return json.loads(data)
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print("Could not find nutritional information for " + name)
