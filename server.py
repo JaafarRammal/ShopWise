@@ -8,7 +8,7 @@ app.config["DEBUG"] = True
 
 app.register_blueprint(barcode, url_prefix='/api')
 app.register_blueprint(production_trace, url_prefix='/api')
-app.register_blueprint(recipes,url_prefix='/api')
+app.register_blueprint(recipes, url_prefix='/api')
 
 tasks = [
     {
