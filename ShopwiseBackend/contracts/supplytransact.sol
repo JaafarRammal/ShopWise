@@ -27,7 +27,7 @@ contract SupplyChain {
     }
 
     function getProduct(uint256 _id) public view returns (Trace memory ){
-        for (uint256 i = 0; i < products.length; ++i) {
+        for (uint256 i = 0; i < productLength; ++i) {
             if(products[i].id == _id) {
                 return products[i];
             }
