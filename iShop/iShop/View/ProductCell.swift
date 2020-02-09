@@ -27,7 +27,7 @@ class ProductCell : UITableViewCell {
     private let productNameLabel : UILabel = {
         let lbl = UILabel()
         lbl.textColor = .black
-        lbl.font = UIFont.boldSystemFont(ofSize: 16)
+        lbl.font = UIFont.boldSystemFont(ofSize: 30)
         lbl.textAlignment = .right
         return lbl
     }()
@@ -36,7 +36,7 @@ class ProductCell : UITableViewCell {
     private let productDescriptionLabel : UILabel = {
         let lbl = UILabel()
         lbl.textColor = .black
-        lbl.font = UIFont.systemFont(ofSize: 16)
+        lbl.font = UIFont.systemFont(ofSize: 30)
         lbl.textAlignment = .left
         lbl.numberOfLines = 0
         return lbl
@@ -44,7 +44,7 @@ class ProductCell : UITableViewCell {
 
     var productPrice : UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 30)
         label.textAlignment = .left
             label.text = "1"
         label.textColor = .black
@@ -73,8 +73,8 @@ class ProductCell : UITableViewCell {
         self.selectionStyle = .none
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+   required init?(coder aDecoder: NSCoder) {
+       super.init(coder: aDecoder)
     }
 
 }

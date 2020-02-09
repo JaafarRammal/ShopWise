@@ -10,11 +10,28 @@ import UIKit
 
 class QRScannerViewController: UIViewController {
     
+    public var isResult : Bool = false
+    public var result : [String: Any] = [:]
+
     struct Item {
-        var name: String
-        var price: String
-        var image: UIImage?
+        var nutrients : Any
+        var lowCarbAlt : Any
+        var name : Any
+        var price : Any
+        var lowFatAlt : Any
+        var lowCalAlt : Any
+        var imageURL : Any
     }
+
+    public var item = Item(
+        nutrients : "",
+        lowCarbAlt : "",
+        name : "",
+        price : "",
+        lowFatAlt : "",
+        lowCalAlt : "",
+        imageURL : ""
+    )
  
     @IBOutlet weak var addToCartButton: UIButton!
     @IBOutlet weak var alternativesButton: UIButton!
@@ -87,8 +104,22 @@ class QRScannerViewController: UIViewController {
         
     }
     
-    func displayItem(code: String){
-        print(code)
+    @IBAction func loadAlternativesView(_ sender: UIButton) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let newViewController = storyBoard.instantiateViewController(withIdentifier: "AlternativesController") as! AlternativesController
+        newViewController.modalPresentationStyle = .fullScreen
+        
+        let transition = CATransition()
+        transition.duration = 0.2
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromRight
+        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+        view.window!.layer.add(transition, forKey: kCATransition)
+        self.navigationController?.pushViewController(newViewController, animated: false)
+        
+    }
+    
+    func displayItem(item: Item){
         self.scannerView.addSubview(self.itemview)
         self.addToCartButton.layer.cornerRadius = 20
         self.alternativesButton.layer.cornerRadius = 20
@@ -96,14 +127,16 @@ class QRScannerViewController: UIViewController {
         self.itemview.center.y -= 70
         self.itemview.layer.cornerRadius = 25
         view.bringSubviewToFront(itemview)
-        self.itemName.text = "Item Name!"
-        self.itemPrice.text = "£" + "3"
+        
+        self.itemName.text = (item.name as! String)
+//        self.itemPrice.text = "£" + (item.price as! String)
+//        setImage(from: item.imageURL as! String)
+        self.item = item
     }
     
     @IBAction func addToCart(_ sender: Any) {
+        addItemToCart(item: self.item)
         itemview.removeFromSuperview()
-        let a = Item(name: "HI", price: "3")
-        addItemToCart(item: a)
     }
     
     @IBAction func alternatives(_ sender: Any) {
@@ -112,6 +145,7 @@ class QRScannerViewController: UIViewController {
     
     func addItemToCart(item: Item){
         fadeViewInThenOut(label: message, delay: TimeInterval(3))
+        // [ADD ITEM TO LOCAL DATA]
     }
     
     func fadeViewInThenOut(label : UILabel, delay: TimeInterval) {
@@ -144,22 +178,68 @@ extension QRScannerViewController: QRScannerViewDelegate {
     
     func qrScanningSucceededWithCode(_ str: String?) {
         self.qrData = QRData(codeString: str)
-        displayItem(code: qrData!.codeString!)
+        HTTPsendRequest(upcCode: qrData!.codeString!)
         scannerView.stopScanning()
-        qrData = nil
+        while (!isResult) {}
+        print(result["nutrients"]!)
+        let item : Item = parseData(nutrients: result["nutrients"]!, lowCarbAlt: result["lowCarbAlt"]!, name: result["name"]!, price: result["price"]!, lowFatAlt: result["lowFatAlt"]!, lowCalAlt: result["lowCalAlt"]!, imageURL: result["imageURL"]! )
+        displayItem(item: item)
+
     }
     
-}
 
-func isValid(data: String, compare: [String]) -> Bool {
-    if(compare.contains(data)){
-        return true
+    func HTTPsendRequest(upcCode:String) -> [String: Any]? {
+        
+    guard let url = URL(string: "https://ichack20.herokuapp.com/api/ean/" + upcCode) else {return [:]}
+
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        guard let dataResponse = data,
+                 error == nil else {
+                 print(error?.localizedDescription ?? "Response Error")
+                 return }
+           do{
+               //here dataResponse received from a network request
+               let jsonResponse = try JSONSerialization.jsonObject(with:
+                                      dataResponse, options: [])
+        //        print(jsonResponse) //Response result
+            guard let jsonArray = jsonResponse as? [String: Any] else {
+                print("empty")
+                  return
+            }
+        //        print("here")
+            self.result = jsonArray
+            print(self.result)
+            self.isResult = true
+
+        //        print(result)
+            } catch let parsingError {
+               print("Error", parsingError)
+          }
+        }
+        task.resume()
+        return result
+        
     }
-    return false
+
+    func parseData(nutrients : Any, lowCarbAlt : Any, name : Any, price : Any, lowFatAlt : Any, lowCalAlt : Any, imageURL : Any) -> Item {
+        let item = Item(nutrients : nutrients, lowCarbAlt : lowCarbAlt, name : name, price : price, lowFatAlt : lowFatAlt, lowCalAlt : lowCalAlt, imageURL : imageURL)
+        return item
+    }
+    
+    func setImage(from url: String) {
+        guard let imageURL = URL(string: url) else { return }
+
+            // just not to cause a deadlock in UI!
+        DispatchQueue.global().async {
+            guard let imageData = try? Data(contentsOf: imageURL) else { return }
+
+            let image = UIImage(data: imageData)
+            DispatchQueue.main.async {
+                self.itemImage.image = image
+            }
+        }
+    }
+
+
+    
 }
-
-func isKeyPresentInUserDefaults(key: String) -> Bool {
-    return UserDefaults.standard.object(forKey: key) != nil
-}
-
-
