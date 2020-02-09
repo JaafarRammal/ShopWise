@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yau-ue-aDY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="37S-OK-YRj">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
@@ -7,7 +7,23 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Cart Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="Tf8-3B-N7h">
+            <objects>
+                <navigationController id="37S-OK-YRj" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="k4X-C8-PWH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="yau-ue-aDY" kind="relationship" relationship="rootViewController" id="QhG-zc-sPe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wtC-Bb-H4y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="141" y="-704"/>
+        </scene>
+        <!--Cart-->
         <scene sceneID="t1M-Xx-M4b">
             <objects>
                 <viewController storyboardIdentifier="CartController" id="OWK-yP-jGS" customClass="CartController" customModule="ShopWise" customModuleProvider="target" sceneMemberID="viewController">
@@ -15,37 +31,44 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kNV-38-UBC">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="635"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ka-IC-92C">
                                 <rect key="frame" x="107" y="655" width="200" height="61"/>
                                 <color key="backgroundColor" red="0.62745098040000002" green="0.36470588240000001" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="61" id="WSe-Aw-RGJ"/>
+                                    <constraint firstAttribute="height" constant="61" id="xTZ-Lo-WjP"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Checkout">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="addToCart:" destination="yau-ue-aDY" eventType="touchUpInside" id="xux-ea-m3b"/>
+                                    <action selector="checkout:" destination="OWK-yP-jGS" eventType="touchUpInside" id="DyP-7A-EvA"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kNV-38-UBC">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="637"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="0Ka-IC-92C" firstAttribute="leading" secondItem="lOV-ro-so4" secondAttribute="leading" constant="107" id="6TQ-x3-v9G"/>
-                            <constraint firstItem="kNV-38-UBC" firstAttribute="leading" secondItem="lOV-ro-so4" secondAttribute="leading" id="6kG-nM-Son"/>
-                            <constraint firstItem="kNV-38-UBC" firstAttribute="top" secondItem="lOV-ro-so4" secondAttribute="top" id="CbX-GR-t7L"/>
-                            <constraint firstItem="0Ka-IC-92C" firstAttribute="centerX" secondItem="kNV-38-UBC" secondAttribute="centerX" id="GZa-eU-EBf"/>
-                            <constraint firstItem="lOV-ro-so4" firstAttribute="bottom" secondItem="0Ka-IC-92C" secondAttribute="bottom" constant="20" id="l5f-Rc-ER2"/>
-                            <constraint firstItem="0Ka-IC-92C" firstAttribute="centerX" secondItem="kn7-3G-bi8" secondAttribute="centerX" id="qB0-yW-Dqu"/>
-                            <constraint firstItem="0Ka-IC-92C" firstAttribute="top" secondItem="kNV-38-UBC" secondAttribute="bottom" constant="20" id="tL2-t6-xwj"/>
+                            <constraint firstItem="kNV-38-UBC" firstAttribute="top" secondItem="lOV-ro-so4" secondAttribute="top" id="0L0-1T-Nct"/>
+                            <constraint firstItem="kNV-38-UBC" firstAttribute="centerX" secondItem="0Ka-IC-92C" secondAttribute="centerX" id="APo-zG-BMQ"/>
+                            <constraint firstItem="kNV-38-UBC" firstAttribute="centerX" secondItem="kn7-3G-bi8" secondAttribute="centerX" id="E7e-qR-gJd"/>
+                            <constraint firstItem="kNV-38-UBC" firstAttribute="leading" secondItem="lOV-ro-so4" secondAttribute="leading" id="ggc-qz-D9J"/>
+                            <constraint firstItem="0Ka-IC-92C" firstAttribute="top" secondItem="kNV-38-UBC" secondAttribute="bottom" constant="18" id="qVG-x6-XZa"/>
+                            <constraint firstItem="0Ka-IC-92C" firstAttribute="leading" secondItem="lOV-ro-so4" secondAttribute="leading" constant="107" id="rNQ-lQ-NbN"/>
+                            <constraint firstItem="lOV-ro-so4" firstAttribute="bottom" secondItem="0Ka-IC-92C" secondAttribute="bottom" constant="20" id="tTC-tb-rkP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lOV-ro-so4"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Cart" largeTitleDisplayMode="always" id="Kan-3f-nc1">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="JKW-fu-S3f"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="checkoutButton" destination="0Ka-IC-92C" id="saa-3B-0Il"/>
+                        <outlet property="tableView" destination="kNV-38-UBC" id="W5Q-cg-DVa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NfP-pY-D8n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -54,13 +77,13 @@
         <!--Scanner View Controller-->
         <scene sceneID="3xL-69-ePF">
             <objects>
-                <viewController id="yau-ue-aDY" customClass="QRScannerViewController" customModule="ShopWise" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CameraController" id="yau-ue-aDY" customClass="QRScannerViewController" customModule="ShopWise" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OfA-BK-wLv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n83-0E-aSt" customClass="QRScannerView" customModule="ShopWise">
-                                <rect key="frame" x="0.0" y="-44" width="414" height="824"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="cart" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="6Sm-gU-6JN">

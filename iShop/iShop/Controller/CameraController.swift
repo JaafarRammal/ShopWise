@@ -55,6 +55,7 @@ class QRScannerViewController: UIViewController {
             scannerView.stopScanning()
         }
         message.alpha = 0
+        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -62,6 +63,7 @@ class QRScannerViewController: UIViewController {
         if !scannerView.isRunning {
             scannerView.stopScanning()
         }
+         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     @IBAction func scanButtonAction(_ sender: UIButton) {
@@ -71,7 +73,6 @@ class QRScannerViewController: UIViewController {
     }
     
     @IBAction func loadCartView(_ sender: UIImageView) {
-        print("hi?")
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "CartController") as! CartController
         newViewController.modalPresentationStyle = .fullScreen
@@ -82,7 +83,8 @@ class QRScannerViewController: UIViewController {
         transition.subtype = CATransitionSubtype.fromLeft
         transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
         view.window!.layer.add(transition, forKey: kCATransition)
-       self.present(newViewController, animated: false, completion: nil)
+        self.navigationController?.pushViewController(newViewController, animated: false)
+        
     }
     
     func displayItem(code: String){
